@@ -1,4 +1,4 @@
-module github.com/gyozabu/himechat-cli
+module github.com/gyozabu/himechat-api
 
 go 1.13
 
