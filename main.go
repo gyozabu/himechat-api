@@ -4,7 +4,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/greymd/ojichat/generator"
+	"github.com/gyozabu/himechat-cli/generator"
 )
 
 func responseBadRequest(c *gin.Context, msg string) {
@@ -36,9 +36,9 @@ func handleReponse(c *gin.Context) {
 	}
 
 	config := generator.Config{
-		TargetName:        targetName,
-		EmojiNum:          emojiNum,
-		PunctiuationLebel: punctuationLabel,
+		TargetName: targetName,
+		EmojiNum:   emojiNum,
+		//		PunctiuationLebel: punctuationLabel,
 	}
 	result, err := generator.Start(config)
 	if err != nil {
