@@ -23,7 +23,8 @@ func handleReponse(c *gin.Context) {
 
 	targetName := c.DefaultQuery("name", "")
 	emojiNumStr := c.DefaultQuery("e", "4")
-	punctuationLabelStr := c.DefaultQuery("p", "0")
+	punctuationLevelStr := c.DefaultQuery("p", "0")
+	manjiLevelStr := c.DefaultQuery("m", "0")
 
 	emojiNum, err := strconv.Atoi(emojiNumStr)
 	if err != nil {
@@ -31,20 +32,31 @@ func handleReponse(c *gin.Context) {
 		return
 	}
 
-	punctuationLabel, err := strconv.Atoi(punctuationLabelStr)
+	punctuationLevel, err := strconv.Atoi(punctuationLevelStr)
 	if err != nil {
 		responseBadRequest(c, "It can only handle numbers.")
 		return
 	}
-	if punctuationLabel > 3 || punctuationLabel < 0 {
+	if punctuationLevel > 3 || punctuationLevel < 0 {
+		responseBadRequest(c, "Possible values for punctuation label are 0 to 3")
+		return
+	}
+
+	manjiLevel, err := strconv.Atoi(manjiLevelStr)
+	if err != nil {
+		responseBadRequest(c, "It can only handle numbers.")
+		return
+	}
+	if manjiLevel > 3 || manjiLevel < 0 {
 		responseBadRequest(c, "Possible values for punctuation label are 0 to 3")
 		return
 	}
 
 	config := generator.Config{
-		TargetName: targetName,
-		EmojiNum:   emojiNum,
-		//		PunctiuationLebel: punctuationLabel,
+		TargetName:        targetName,
+		EmojiNum:          emojiNum,
+		PunctiuationLevel: punctuationLevel,
+		ManjiLevel:        manjiLevel,
 	}
 
 	result, err := generator.Start(config)
@@ -61,7 +73,7 @@ func handleReponse(c *gin.Context) {
 func main() {
 	r := gin.Default()
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:8081", "https://himechat-gyoza.web.app"}
+	config.AllowOrigins = []string{"https://himechat-gyoza.web.app"}
 	r.Use(cors.New(config))
 	r.GET("/", handleReponse)
 	r.Run()
