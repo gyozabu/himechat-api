@@ -3,6 +3,7 @@ package main
 import (
 	"strconv"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/gyozabu/himechat-cli/generator"
 )
@@ -40,6 +41,7 @@ func handleReponse(c *gin.Context) {
 		EmojiNum:   emojiNum,
 		//		PunctiuationLebel: punctuationLabel,
 	}
+
 	result, err := generator.Start(config)
 	if err != nil {
 		c.AbortWithError(500, err)
@@ -53,6 +55,9 @@ func handleReponse(c *gin.Context) {
 
 func main() {
 	r := gin.Default()
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"https://localhost:8081"}
+	r.Use(cors.New(config))
 	r.GET("/", handleReponse)
 	r.Run()
 }
