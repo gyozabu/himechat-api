@@ -6,7 +6,7 @@ require (
 	github.com/gin-contrib/cors v1.3.0
 	github.com/gin-gonic/gin v1.5.0
 	github.com/go-playground/universal-translator v0.17.0 // indirect
-	github.com/gyozabu/himechat-cli v0.7.0
+	github.com/gyozabu/himechat-cli v0.8.0
 	github.com/ikawaha/kagome.ipadic v1.1.2 // indirect
 	github.com/json-iterator/go v1.1.8 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
