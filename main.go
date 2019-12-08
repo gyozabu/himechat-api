@@ -16,6 +16,11 @@ func responseBadRequest(c *gin.Context, msg string) {
 
 func handleReponse(c *gin.Context) {
 
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	c.Header("Access-Control-Max-Age", "86400")
+	c.Header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+
 	targetName := c.DefaultQuery("name", "")
 	emojiNumStr := c.DefaultQuery("e", "4")
 	punctuationLabelStr := c.DefaultQuery("p", "0")
@@ -56,7 +61,7 @@ func handleReponse(c *gin.Context) {
 func main() {
 	r := gin.Default()
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"https://localhost:8081"}
+	config.AllowOrigins = []string{"http://localhost:8081", "https://himechat-gyoza.web.app"}
 	r.Use(cors.New(config))
 	r.GET("/", handleReponse)
 	r.Run()
